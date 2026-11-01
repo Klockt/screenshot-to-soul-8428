@@ -97,7 +97,7 @@ const INICIALES: Cita[] = [
   {
     id: "RREE-1042",
     categoria: "salud",
-    profesional: PROFESIONALES.salud[0],
+    profesional: PROFESIONALES.salud[0]!,
     fecha: "2026-11-05",
     bloque: "09:00 - 09:20",
     tramite: "Consulta psicológica",
@@ -106,7 +106,7 @@ const INICIALES: Cita[] = [
   {
     id: "RREE-1057",
     categoria: "social",
-    profesional: PROFESIONALES.social[0],
+    profesional: PROFESIONALES.social[0]!,
     fecha: "2026-11-10",
     bloque: "12:00 - 12:20",
     tramite: "Consulta general de Gratuidad",
