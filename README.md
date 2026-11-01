@@ -1,24 +1,17 @@
-# Screenshot To Soul
+# Tarea DIU
 
-Implement exactly the screenshot and nothing else
-
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/dca3e577-94a6-497a-b0a6-d1096d62d531).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+Integrantes:
+- Amaro Alarcón
+- Diego Duarte
+- Maximo Castillo
 
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+### Requerimientos
+- bun
+- node v22.23.4
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+### Comandos
+- 'bun install'
+- 'bun run dev'
+- Hacer click en "localhost"
