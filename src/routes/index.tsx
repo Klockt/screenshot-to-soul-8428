@@ -37,6 +37,13 @@ type Cita = {
   comentarios: string;
 };
 
+type Beneficio = {
+  id: string;
+  titulo: string;
+  url: string;
+  imagen: string;
+};
+
 const USER = "Adolfo Epstein";
 const ROL = "202273514-K";
 const CARRERA = "Ing. Civil Informática";
@@ -107,6 +114,45 @@ const DOCUMENTOS: Record<string, string[]> = {
     "Cédula de identidad",
   ],
 };
+
+const BENEFICIOS_ITEMS: Beneficio[] = [
+  {
+    id: "b-1",
+    titulo: "Beneficios USM",
+    url: "https://rree.usm.cl/atencion-social-beneficios/beneficios-usm/",
+    imagen: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: "b-2",
+    titulo: "Tarjeta Nacional Estudiantil (TNE)",
+    url: "https://rree.usm.cl/atencion-social-beneficios/tarjeta-nacional-estudiantil-tne/",
+    imagen: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: "b-3",
+    titulo: "Becas Junaeb",
+    url: "https://rree.usm.cl/atencion-social-beneficios/becas-junaeb/",
+    imagen: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: "b-4",
+    titulo: "Gratuidad",
+    url: "https://rree.usm.cl/atencion-social-beneficios/gratuidad/",
+    imagen: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: "b-5",
+    titulo: "Becas y Créditos Mineduc",
+    url: "https://rree.usm.cl/atencion-social-beneficios/becas-y-creditos-mineduc/",
+    imagen: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: "b-6",
+    titulo: "Fondo Solidario y CAE",
+    url: "https://rree.usm.cl/atencion-social-beneficios/fondo-solidario-y-cae/",
+    imagen: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80",
+  },
+];
 
 const BLOQUES = [
   "08:15 - 08:35",
@@ -245,13 +291,21 @@ function Inicio({ onAgendar }: { onAgendar: (c: Cat) => void }) {
       items: "Gratuidad · Becas MINEDUC · Congelamiento",
     },
   ];
-  
+
+  const [beneficioIdx, setBeneficioIdx] = useState(0);
+  const itemsVisibles = 4;
+  const maxIdx = Math.max(0, BENEFICIOS_ITEMS.length - itemsVisibles);
+
+  const prevBeneficio = () => setBeneficioIdx((p) => Math.max(0, p - 1));
+  const nextBeneficio = () => setBeneficioIdx((p) => Math.min(maxIdx, p + 1));
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       <div>
         <h1 className="font-display text-3xl font-extrabold text-primary">Hola, Adolfo</h1>
         <p className="mt-1 text-muted-foreground">¿Qué tipo de atención necesitas hoy?</p>
       </div>
+
       <div className="grid gap-6 md:grid-cols-3">
         {cards.map((c) => (
           <div key={c.cat} className="flex flex-col rounded-lg border-t-4 border-accent bg-card p-6 shadow-sm">
@@ -264,6 +318,65 @@ function Inicio({ onAgendar }: { onAgendar: (c: Cat) => void }) {
           </div>
         ))}
       </div>
+
+      {/* Sección Beneficios Estudiantiles */}
+      <section className="space-y-4">
+        <h2 className="font-display text-2xl font-bold tracking-tight text-primary">
+          Beneficios Estudiantiles
+        </h2>
+        
+        <div className="relative overflow-hidden">
+          <div 
+            className="flex gap-4 transition-transform duration-300 ease-in-out"
+            style={{ transform: `translateX(-${beneficioIdx * (100 / itemsVisibles)}%)` }}
+          >
+            {BENEFICIOS_ITEMS.map((item) => (
+              <a
+                key={item.id}
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative flex h-40 min-w-[calc(100%/1.2-12px)] sm:min-w-[calc(100%/2-12px)] md:min-w-[calc(100%/4-12px)] flex-col justify-end overflow-hidden rounded-xl bg-slate-900 p-4 transition-transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent"
+              >
+                <img
+                  src={item.imagen}
+                  alt={item.titulo}
+                  className="absolute inset-0 h-full w-full object-cover opacity-60 transition-opacity duration-300 group-hover:opacity-40"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                <span className="relative z-10 text-center font-display text-sm font-semibold text-white group-hover:text-amber-300">
+                  {item.titulo}
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Paginador inferior */}
+        <div className="flex items-center justify-end gap-2 text-xs font-semibold text-muted-foreground pt-1">
+          <button
+            type="button"
+            onClick={prevBeneficio}
+            disabled={beneficioIdx === 0}
+            className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-white transition-opacity hover:bg-amber-600 disabled:opacity-30"
+            aria-label="Anterior"
+          >
+            ←
+          </button>
+          <span>
+            {Math.min(beneficioIdx + itemsVisibles, BENEFICIOS_ITEMS.length)}/{BENEFICIOS_ITEMS.length}
+          </span>
+          <button
+            type="button"
+            onClick={nextBeneficio}
+            disabled={beneficioIdx >= maxIdx}
+            className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-white transition-opacity hover:bg-amber-600 disabled:opacity-30"
+            aria-label="Siguiente"
+          >
+            →
+          </button>
+        </div>
+      </section>
     </div>
   );
 }
@@ -398,9 +511,9 @@ function Agendar({
       </div>
 
       <div>
-        <label className="text-sm font-medium">Motivo de Atención — Trámite{errors.tramite && <Req />}</label>
+        <label className="text-sm font-medium">Motivo de Atención{errors.tramite && <Req />}</label>
         <select className={`${field} mt-2`} value={tramite} disabled={!cat} onChange={(e) => setTramite(e.target.value)}>
-          <option value="">{cat ? "Selecciona el trámite" : "Primero elige una categoría"}</option>
+          <option value="">{cat ? "Selecciona un servicio" : "Primero elige una categoría"}</option>
           {cat && TRAMITES[cat].map((t) => <option key={t} value={t}>{t}</option>)}
         </select>
         {err("tramite")}
