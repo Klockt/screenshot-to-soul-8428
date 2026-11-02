@@ -13,6 +13,9 @@ import usmEscudo from "@/assets/usm-escudo.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
+    links: [
+      { rel: "icon", href: usmEscudo, type: "image/png" },
+    ],
     meta: [
       { title: "Portal de Reservas RREE · USM San Joaquín" },
       { name: "description", content: "Agenda horas de salud, apoyo psicológico y asistencia social en Relaciones Estudiantiles USM." },
@@ -119,37 +122,37 @@ const BENEFICIOS_ITEMS: Beneficio[] = [
   {
     id: "b-1",
     titulo: "Beneficios USM",
-    url: "https://rree.usm.cl/atencion-social-beneficios/beneficios-usm/",
+    url: "https://rree.usm.cl/",
     imagen: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=600&q=80",
   },
   {
     id: "b-2",
     titulo: "Tarjeta Nacional Estudiantil (TNE)",
-    url: "https://rree.usm.cl/atencion-social-beneficios/tarjeta-nacional-estudiantil-tne/",
+    url: "https://rree.usm.cl/",
     imagen: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80",
   },
   {
     id: "b-3",
     titulo: "Becas Junaeb",
-    url: "https://rree.usm.cl/atencion-social-beneficios/becas-junaeb/",
+    url: "https://rree.usm.cl/",
     imagen: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80",
   },
   {
     id: "b-4",
     titulo: "Gratuidad",
-    url: "https://rree.usm.cl/atencion-social-beneficios/gratuidad/",
+    url: "https://rree.usm.cl/",
     imagen: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80",
   },
   {
     id: "b-5",
     titulo: "Becas y Créditos Mineduc",
-    url: "https://rree.usm.cl/atencion-social-beneficios/becas-y-creditos-mineduc/",
+    url: "https://rree.usm.cl/",
     imagen: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80",
   },
   {
     id: "b-6",
     titulo: "Fondo Solidario y CAE",
-    url: "https://rree.usm.cl/atencion-social-beneficios/fondo-solidario-y-cae/",
+    url: "https://rree.usm.cl/",
     imagen: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80",
   },
 ];
