@@ -9,6 +9,8 @@ import {
   DialogFooter,
   DialogDescription,
 } from "@/components/ui/dialog";
+import usmEscudo from "@/assets/usm-escudo.png";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -201,6 +203,20 @@ function Inicio({ onAgendar, onCitas, total }: { onAgendar: (c: Cat) => void; on
   ];
   return (
     <div className="space-y-8">
+        <div className="flex items-center gap-3">
+    <img 
+      src={usmEscudo} 
+      alt="Escudo Universidad Técnica Federico Santa María" 
+      className="h-14 w-auto" 
+    />
+    <div>
+      <p className="font-display text-xl font-extrabold tracking-tight">
+        RREE <span className="text-accent">USM</span>
+      </p>
+      <p className="text-xs opacity-80">Relaciones Estudiantiles · Campus San Joaquín</p>
+    </div>
+  </div>
+
       <div>
         <h1 className="font-display text-3xl font-extrabold text-primary">Hola, Adolfo</h1>
         <p className="mt-1 text-muted-foreground">¿Qué tipo de atención necesitas hoy?</p>
