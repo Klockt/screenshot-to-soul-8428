@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import usmEscudo from "@/assets/usm-escudo.png";
 
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -26,7 +25,7 @@ export const Route = createFileRoute("/")({
   component: App,
 });
 
-type Cat = "salud" | "social";
+type Cat = "salud" | "psicologia" | "social";
 type View = "inicio" | "agendar" | "citas";
 type Cita = {
   id: string;
@@ -44,9 +43,11 @@ const CARRERA = "Ing. Civil Informática";
 
 const PROFESIONALES: Record<Cat, string[]> = {
   salud: [
-    "Ps. Roberto Méndez - Psicólogo, Oficina F-154",
     "Dra. Paula Fuentes - Médico General, Oficina F-150",
     "Dr. Ignacio Rojas - Dentista, Oficina F-151",
+  ],
+  psicologia: [
+    "Ps. Roberto Méndez - Psicólogo, Oficina F-154",
   ],
   social: [
     "Sra. Carmen Cárdenas Mundaca - Asistente Social, Oficina F-152, carmen.cardenas@usm.cl",
@@ -55,12 +56,34 @@ const PROFESIONALES: Record<Cat, string[]> = {
 };
 
 const TRAMITES: Record<Cat, string[]> = {
-  salud: ["Consulta psicológica", "Consulta médica general", "Atención dental", "Certificado médico"],
+  salud: ["Consulta médica general", "Atención dental", "Certificado médico"],
+  psicologia: ["Consulta psicológica"],
   social: [
+    "Beca de Alimentación JUNAEB",
+    "Beca de Alimentación USM",
+    "Beca Residencia USM",
+    "Becas AEXA",
+    "Becas JUNAEB (PRI, CHAITEN, IT, INDIGENA)",
+    "Beneficios MINEDUC",
+    "Beneficios USM - Solicitudes y/o Renuncias",
+    "Cambio de Carrera y/o Campus/Sede",
+    "Cambio de Universidad",
+    "Cómo congelar Beneficios MINEDUC",
+    "Cómo Efectuar Supensión Temporal de Estudios",
     "Congelar con Gratuidad",
-    "Pérdida de beneficios MINEDUC",
-    "Postulación Becas MINEDUC",
     "Consulta general de Gratuidad",
+    "Crédito con Aval del Estado",
+    "Declaración de Antecedentes Socioeconómicos",
+    "Económico pago de Arancel y/o Matrícula",
+    "Enfermedades y gastos derivados",
+    "Familiares y/o personales",
+    "Firma del Pagaré FSCU",
+    "Pérdida de Beneficios MINEDUC estudiante de curso superior",
+    "Postulación Becas MINEDUC",
+    "Reingreso a la Universidad",
+    "Renovación de Beneficios",
+    "Suspensión de Estudios y/o Retiro definitivo",
+    "TNE",
   ],
 };
 
@@ -71,7 +94,13 @@ const DOCUMENTOS: Record<string, string[]> = {
     "Documento que respalde la causal (médico, laboral o familiar)",
     "Cédula de identidad",
   ],
-  "Pérdida de beneficios MINEDUC": [
+  "Cómo congelar Beneficios MINEDUC": [
+    "Concentración de notas actualizada",
+    "Carta explicativa de la situación académica",
+    "Documentos de respaldo de causal (certificados médicos, sociales)",
+    "Cédula de identidad",
+  ],
+  "Pérdida de Beneficios MINEDUC estudiante de curso superior": [
     "Concentración de notas actualizada",
     "Carta explicativa de la situación académica",
     "Documentos de respaldo de causal (certificados médicos, sociales)",
@@ -91,15 +120,16 @@ const BLOQUES = [
 ];
 
 const CAT_LABEL: Record<Cat, string> = {
-  salud: "Salud y Apoyo Psicológico",
+  salud: "Salud Médica y Dental",
+  psicologia: "Apoyo Psicológico",
   social: "Beneficios y Asistencia Social",
 };
 
 const INICIALES: Cita[] = [
   {
     id: "RREE-1042",
-    categoria: "salud",
-    profesional: PROFESIONALES.salud[0]!,
+    categoria: "psicologia",
+    profesional: PROFESIONALES.psicologia[0]!,
     fecha: "2026-11-05",
     bloque: "09:00 - 09:20",
     tramite: "Consulta psicológica",
@@ -141,13 +171,21 @@ function App() {
     <div className="min-h-screen bg-background font-sans">
       <header className="bg-primary text-primary-foreground">
         <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="font-display text-xl font-extrabold tracking-tight">
-              RREE <span className="text-accent">USM</span>
-            </p>
-            <p className="text-xs opacity-80">Relaciones Estudiantiles · Campus San Joaquín</p>
+          <div className="flex items-center gap-3">
+            <img 
+              src={usmEscudo} 
+              alt="Escudo Universidad Técnica Federico Santa María" 
+              className="h-12 w-auto rounded-sm bg-white p-1" 
+            />
+            <div>
+              <p className="font-display text-xl font-extrabold tracking-tight">
+                RREE <span className="text-accent">USM</span>
+              </p>
+              <p className="text-xs opacity-80">Relaciones Estudiantiles · Campus San Joaquín</p>
+            </div>
           </div>
-          <p className="text-xs opacity-90">
+
+          <p className="text-xs opacity-90 md:text-right">
             {USER} · Rol {ROL} · {CARRERA}
           </p>
         </div>
@@ -167,7 +205,8 @@ function App() {
       </header>
 
       <main className="mx-auto max-w-5xl px-4 py-8">
-        {view === "inicio" && <Inicio onAgendar={goAgendar} onCitas={() => setView("citas")} total={citas.length} />}
+        {view === "inicio" && <Inicio onAgendar={goAgendar} />}
+        
         {view === "agendar" && (
           <Agendar
             key={preCat || "none"}
@@ -188,59 +227,42 @@ function App() {
   );
 }
 
-function Inicio({ onAgendar, onCitas, total }: { onAgendar: (c: Cat) => void; onCitas: () => void; total: number }) {
+function Inicio({ onAgendar }: { onAgendar: (c: Cat) => void }) {
   const cards: { cat: Cat; desc: string; items: string }[] = [
     {
       cat: "salud",
-      desc: "Atención de profesionales de la salud para tu bienestar físico y emocional.",
-      items: "Psicología · Médico · Dental",
+      desc: "Atención de profesionales de la salud para tu bienestar físico.",
+      items: "Médico · Dental",
+    },
+    {
+      cat: "psicologia",
+      desc: "Apoyo profesional para tu bienestar emocional y salud mental.",
+      items: "Psicología",
     },
     {
       cat: "social",
-      desc: "Orientación con asistentes sociales sobre beneficios estudiantiles y trámites académico-financieros.",
+      desc: "Orientación con asistentes sociales sobre beneficios estudiantiles y trámites.",
       items: "Gratuidad · Becas MINEDUC · Congelamiento",
     },
   ];
+  
   return (
     <div className="space-y-8">
-        <div className="flex items-center gap-3">
-    <img 
-      src={usmEscudo} 
-      alt="Escudo Universidad Técnica Federico Santa María" 
-      className="h-14 w-auto" 
-    />
-    <div>
-      <p className="font-display text-xl font-extrabold tracking-tight">
-        RREE <span className="text-accent">USM</span>
-      </p>
-      <p className="text-xs opacity-80">Relaciones Estudiantiles · Campus San Joaquín</p>
-    </div>
-  </div>
-
       <div>
         <h1 className="font-display text-3xl font-extrabold text-primary">Hola, Adolfo</h1>
         <p className="mt-1 text-muted-foreground">¿Qué tipo de atención necesitas hoy?</p>
       </div>
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-3">
         {cards.map((c) => (
           <div key={c.cat} className="flex flex-col rounded-lg border-t-4 border-accent bg-card p-6 shadow-sm">
             <h2 className="font-display text-xl font-semibold text-primary">{CAT_LABEL[c.cat]}</h2>
             <p className="mt-1 text-sm font-medium text-secondary-foreground">{c.items}</p>
             <p className="mt-3 flex-1 text-sm text-muted-foreground">{c.desc}</p>
             <Button className="mt-5 self-start" onClick={() => onAgendar(c.cat)}>
-              Agendar en esta categoría
+              Agendar
             </Button>
           </div>
         ))}
-      </div>
-      <div className="flex flex-col items-start justify-between gap-3 rounded-lg bg-secondary p-5 sm:flex-row sm:items-center">
-        <div>
-          <p className="font-semibold text-secondary-foreground">Mis Citas Agendadas</p>
-          <p className="text-sm text-muted-foreground">Tienes {total} cita(s) activa(s).</p>
-        </div>
-        <Button variant="outline" onClick={onCitas}>
-          Ver mis citas
-        </Button>
       </div>
     </div>
   );
@@ -324,8 +346,8 @@ function Agendar({
 
       <div>
         <label className="text-sm font-medium">Categoría{errors.cat && <Req />}</label>
-        <div className="mt-2 grid gap-2 sm:grid-cols-2">
-          {(["salud", "social"] as Cat[]).map((c) => (
+        <div className="mt-2 grid gap-2 sm:grid-cols-3">
+          {(["salud", "psicologia", "social"] as Cat[]).map((c) => (
             <button
               key={c}
               type="button"
@@ -334,7 +356,7 @@ function Agendar({
                 cat === c ? "border-primary bg-primary text-primary-foreground" : "border-input hover:bg-secondary"
               }`}
             >
-              {c === "salud" ? "Salud / Psicología" : "Asistencia Social"}
+              {CAT_LABEL[c]}
             </button>
           ))}
         </div>
